@@ -1,3 +1,29 @@
+/*This is just an exceprt from my larger main file*/
+/*This is showing the 4 main elements of the props: Windmill, Letters, Stair Right, and Stair Left*/
+
+#include <FastLED.h>
+
+oid setup() {
+  /*first group of outputs*/
+  FastLED.addLeds<WS2811, 2, GRB>(stair_right, NUM_LEDS_PER_STAIR).setCorrection(TypicalSMD5050);
+  FastLED.addLeds<WS2811, 14, GRB>(stair_left, NUM_LEDS_PER_STAIR).setCorrection(TypicalSMD5050);
+  //FastLED.addLeds<WS2811, 7, GRB>  (letters, NUM_LEDS_LETTERS).setCorrection (Typical8mmPixel);
+  //FastLED.addLeds<WS2811, 8, GRB>  (window4, NUM_LEDS_PER_SW).setCorrection (TypicalSMD5050);
+
+  /*second group of outputs*/
+  FastLED.addLeds<WS2811, 21, GRB>(windmill, NUM_LEDS_WINDMILL).setCorrection(TypicalSMD5050);
+  //FastLED.addLeds<WS2811, 20, GRB> (signBL, NUM_LEDS_SIGN_BL).setCorrection (Typical8mmPixel);
+  FastLED.addLeds<WS2811, 6, RGB>(letters, NUM_LEDS_LETTERS).setCorrection(Typical8mmPixel);
+  //FastLED.addLeds<WS2811, 5, RGB>  (xxx, NUM_LEDS_xxx).setCorrection (Typical8mmPixel);
+  
+  FastLED.setBrightness(255);   //setting the global brightness value (255 = full brightness)
+  //Serial.begin(9600); //this is for the USB interface for debugging/monitoring
+  Serial1.begin(9600);  //serial 1 connected to the bluetooth HC-05
+  Serial7.begin(9600);  //serial 7 connected to the windmill motor controller (Teensy3.2 - Serial 1)
+  pinMode(led, OUTPUT);
+  pinMode(spotlight1, OUTPUT);  //output pins to drive external spotlights
+  pinMode(spotlight2, OUTPUT);  //output pins to drive external spotlights
+}
 
 CRGBArray<NUM_LEDS_PER_STAIR> stair_right;
 CRGBArray<NUM_LEDS_PER_STAIR> stair_left;
