@@ -59,7 +59,7 @@ CRGBSet const windmill_sets[] =
   windmill(165,219),    //blade 4
 };
 
-void segment_flash()             //this will walk through each of the letters with a slight fade to black. It takes in the HSV from the App
+void segment_flash()             //this will walk through each of the letters with a slight fade to black. It takes in the HSV values from the App
 {
   static uint8_t z = 0;
   static uint8_t y = 0;
@@ -71,8 +71,8 @@ void segment_flash()             //this will walk through each of the letters wi
   EVERY_N_MILLIS(120)           //how fast to cycle through each letter
   {
     z = (z + 1) % 11;           //counting through each letter set (the letter set is defined in the CRGBSet definition at the top of the code)
-    y = (y + 1) % 5;
-    x = (x + 1) % 4;
+    y = (y + 1) % 5;            //counting through each step in the stairs (5 steps per stair set) - consider counting down instead of up
+    x = (x + 1) % 4;            //counting through each windmill blade (4 blades in the windmill)
   }
   fadeToBlackBy(letters, NUM_LEDS_LETTERS, 30);
   fadeToBlackBy(stair_right, NUM_LEDS_PER_STAIR, 50);
