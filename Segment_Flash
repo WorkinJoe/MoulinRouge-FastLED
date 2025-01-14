@@ -1,0 +1,64 @@
+
+CRGBArray<NUM_LEDS_PER_STAIR> stair_right;
+CRGBArray<NUM_LEDS_PER_STAIR> stair_left;
+CRGBArray<NUM_LEDS_LETTERS> letters;
+CRGBArray<NUM_LEDS_WINDMILL> windmill;
+
+CRGBSet const letter_sets[] = {
+  letters(0,49),    //M
+  letters(50,77),   //O
+  letters(78,102),  //U
+  letters(103,116), //L
+  letters(117,128), //I
+  letters(129,164), //N
+  letters(165,191), //R
+  letters(192,219), //O
+  letters(220,244), //U
+  letters(245,272), //G
+  letters(273,293), //E
+};
+
+CRGBSet const stair_right_sets[] = {
+  stair_right(0,65),    //bottom step
+  stair_right(66,131),
+  stair_right(132,197),
+  stair_right(198,263),
+  stair_right(264,296), //top step
+};
+
+CRGBSet const stair_left_sets[] = {
+  stair_left(0,65),     //bottom step
+  stair_left(66,131),
+  stair_left(132,197),
+  stair_left(198,263),
+  stair_left(264,296),   //top step
+};
+
+CRGBSet const windmill_sets[] = {
+  windmill(0,54),
+  windmill(55,109),
+  windmill(110,164),
+  windmill(165,219),
+};
+
+
+void segment_flash()             //this will walk through each of the letters with a slight fade to black. It takes in the HSV from the App
+{
+  static uint8_t z = 0;
+  static uint8_t y = 0;
+  static uint8_t x = 0;
+  letter_sets[z].fill_solid(CHSV(hue,sat,value));
+  stair_right_sets[y].fill_solid(CHSV(hue,sat,value));
+  stair_left_sets[y].fill_solid(CHSV(hue,sat,value));
+  windmill_sets[x].fill_solid(CHSV(hue,sat,value));
+  EVERY_N_MILLIS(120)           //how fast to cycle through each letter
+  {
+    z = (z + 1) % 11;           //counting through each letter set (the letter set is defined in the CRGBSet definition at the top of the code)
+    y = (y + 1) % 5;
+    x = (x + 1) % 4;
+  }
+  fadeToBlackBy(letters, NUM_LEDS_LETTERS, 30);
+  fadeToBlackBy(stair_right, NUM_LEDS_PER_STAIR, 50);
+  fadeToBlackBy(stair_left, NUM_LEDS_PER_STAIR, 50);
+  fadeToBlackBy(windmill, NUM_LEDS_WINDMILL, 50);
+}
